@@ -15,5 +15,8 @@
  */
  
  table#movies th.hilite {
-  background-color: yellow;
+  
+  font-style: italic;
+  font-family: serif
+ 
 }
