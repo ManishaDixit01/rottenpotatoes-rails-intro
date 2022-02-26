@@ -12,6 +12,7 @@ class MoviesController < ApplicationController
   # end
   def index
     @movies = Movie.all
+    
     #@sorted_by = params[:sort_by]
     @all_ratings = Movie.get_unique_ratings
     @checked_movies = @all_ratings
