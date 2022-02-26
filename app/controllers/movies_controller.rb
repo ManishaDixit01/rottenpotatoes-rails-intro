@@ -6,26 +6,19 @@ class MoviesController < ApplicationController
     # will render app/views/movies/show.<extension> by default
   end
 
-  # def index
-  # # @movies = Movie.all
-   
-  # end
   def index
     @movies = Movie.all
-    
-    #@sorted_by = params[:sort_by]
     @all_ratings = Movie.get_unique_ratings
-    @checked_movies = @all_ratings
     
     if params.key?(:ratings)
       session[:ratings] = params[:ratings].keys
     end
-   
     if session.key?(:ratings)
-      @ratings_checks = session[:ratings]
-      @movies = @movies.where(rating: @ratings_checks)
+      @checked_movies = session[:ratings]
+      @movies = @movies.where(rating: @checked_movies)
+    else
+      @checked_movies = @all_ratings
     end
-    
     if params.key?(:sort_by)
       session[:sort_by] = params[:sort_by]
     end
@@ -37,10 +30,7 @@ class MoviesController < ApplicationController
       @movies = @movies.order(:release_date)
       @sorted_by = 'release_date'
     end
-    
     flash.keep
-    
-      
   end
 
   def new
