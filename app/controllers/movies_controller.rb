@@ -12,16 +12,9 @@ class MoviesController < ApplicationController
   # end
   def index
     @movies = Movie.all
-    @sorted_by = params[:sort_by]
+    #@sorted_by = params[:sort_by]
     @all_ratings = Movie.get_unique_ratings
     @checked_movies = @all_ratings
-    # if params.key?(:ratings)
-    #   @checked_movies = (params[:ratings]).keys
-    #   @movies = @movies.where(rating:@checked_movies)
-    # end
-    # if params.key?(:sort_by)
-    #   @movies = @movies.order(params[:sort_by])
-    # end
     
     if params.key?(:ratings)
       session[:ratings] = params[:ratings].keys
@@ -41,7 +34,7 @@ class MoviesController < ApplicationController
       @sorted_by = 'title'
     elsif session[:sort_by] == 'release_date'
       @movies = @movies.order(:release_date)
-      @sort_date = 'release_date'
+      @sorted_by = 'release_date'
     end
     
     flash.keep
